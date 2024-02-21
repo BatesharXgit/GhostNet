@@ -31,7 +31,7 @@ class _VpnCardState extends State<VpnCard> {
       children: [
         ListView.builder(
           shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
+          physics: BouncingScrollPhysics(),
           itemCount: showAllVpns
               ? widget.vpnList.length
               : min(widget.vpnList.length, 4),
@@ -90,9 +90,9 @@ class _VpnCardState extends State<VpnCard> {
             );
           },
         ),
-        if (widget.vpnList.length > 3)
+        if (widget.vpnList.length > 4)
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
               if (!showAllVpns)
                 TextButton(
@@ -101,7 +101,11 @@ class _VpnCardState extends State<VpnCard> {
                       showAllVpns = true;
                     });
                   },
-                  child: Text('More'),
+                  child: Text(
+                    'See More',
+                    style: TextStyle(
+                        color: Pref.isDarkMode ? Colors.white : Colors.black),
+                  ),
                 )
               else
                 TextButton(

@@ -34,12 +34,12 @@ class LocationScreen extends StatelessWidget {
                     child: SizedBox(
                         height: 85, child: AdWidget(ad: _adController.ad!)))
                 : null,
-        floatingActionButton: Padding(
-          padding: const EdgeInsets.only(bottom: 10, right: 10),
-          child: FloatingActionButton(
-              onPressed: () => _controller.getVpnData(),
-              child: Icon(CupertinoIcons.refresh)),
-        ),
+        // floatingActionButton: Padding(
+        //   padding: const EdgeInsets.only(bottom: 10, right: 10),
+        //   child: FloatingActionButton(
+        //       onPressed: () => _controller.getVpnData(),
+        //       child: Icon(CupertinoIcons.refresh)),
+        // ),
         body: _controller.isLoading.value
             ? _loadingWidget()
             : _controller.vpnList.isEmpty
@@ -54,11 +54,15 @@ class LocationScreen extends StatelessWidget {
 
     final groupedVpnList = _groupVpnsByCountry(_controller.vpnList);
 
-    return ListView.builder(
-      itemCount: groupedVpnList.length,
-      itemBuilder: (context, index) {
-        return VpnCard(vpnList: groupedVpnList[index]);
-      },
+    return RefreshIndicator(
+      onRefresh: () => _controller.getVpnData(),
+      child: ListView.builder(
+        physics: BouncingScrollPhysics(),
+        itemCount: groupedVpnList.length,
+        itemBuilder: (context, index) {
+          return VpnCard(vpnList: groupedVpnList[index]);
+        },
+      ),
     );
   }
 
@@ -76,23 +80,11 @@ class LocationScreen extends StatelessWidget {
   }
 
   Widget _loadingWidget() => SizedBox(
-        width: double.infinity,
-        height: double.infinity,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            LottieBuilder.asset('assets/lottie/loading.json',
-                width: mediaQuery.width * .7),
-            Text(
-              'Loading VPNs... 😌',
-              style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.black54,
-                  fontWeight: FontWeight.bold),
-            )
-          ],
-        ),
-      );
+      width: double.infinity,
+      height: double.infinity,
+      child: Center(
+        child: CircularProgressIndicator(),
+      ));
 
   Widget _noVPNFound() => Center(
         child: Text(
