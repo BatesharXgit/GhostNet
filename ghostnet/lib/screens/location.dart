@@ -8,10 +8,11 @@ import '../controllers/location_controller.dart';
 import '../controllers/native_ad_controller.dart';
 import '../helpers/ad_helper.dart';
 import '../main.dart';
+import '../models/vpn.dart';
 import '../widgets/vpn_card.dart';
 
 class LocationScreen extends StatelessWidget {
-  LocationScreen({super.key});
+  LocationScreen({Key? key});
 
   final _controller = LocationController();
   final _adController = NativeAdController();
@@ -24,27 +25,21 @@ class LocationScreen extends StatelessWidget {
 
     return Obx(
       () => Scaffold(
-        //app bar
         appBar: AppBar(
-          title: Text('VPN Locations (${_controller.vpnList.length})'),
+          title: Text('Servers (${_controller.vpnList.length})'),
         ),
-
         bottomNavigationBar:
-            // Config.hideAds ? null:
             _adController.ad != null && _adController.adLoaded.isTrue
                 ? SafeArea(
                     child: SizedBox(
                         height: 85, child: AdWidget(ad: _adController.ad!)))
                 : null,
-
-        //refresh button
         floatingActionButton: Padding(
           padding: const EdgeInsets.only(bottom: 10, right: 10),
           child: FloatingActionButton(
               onPressed: () => _controller.getVpnData(),
               child: Icon(CupertinoIcons.refresh)),
         ),
-
         body: _controller.isLoading.value
             ? _loadingWidget()
             : _controller.vpnList.isEmpty
@@ -54,27 +49,40 @@ class LocationScreen extends StatelessWidget {
     );
   }
 
-  _vpnData() => ListView.builder(
-      itemCount: _controller.vpnList.length,
-      physics: BouncingScrollPhysics(),
-      padding: EdgeInsets.only(
-          top: mediaQuery.height * .015,
-          bottom: mediaQuery.height * .1,
-          left: mediaQuery.width * .04,
-          right: mediaQuery.width * .04),
-      itemBuilder: (ctx, i) => VpnCard(vpn: _controller.vpnList[i]));
+  Widget _vpnData() {
+    _controller.vpnList.sort((a, b) => a.countryLong.compareTo(b.countryLong));
 
-  _loadingWidget() => SizedBox(
+    final groupedVpnList = _groupVpnsByCountry(_controller.vpnList);
+
+    return ListView.builder(
+      itemCount: groupedVpnList.length,
+      itemBuilder: (context, index) {
+        return VpnCard(vpnList: groupedVpnList[index]);
+      },
+    );
+  }
+
+  List<List<Vpn>> _groupVpnsByCountry(List<Vpn> vpnList) {
+    Map<String, List<Vpn>> groupedVpns = {};
+
+    for (var vpn in vpnList) {
+      if (!groupedVpns.containsKey(vpn.countryLong)) {
+        groupedVpns[vpn.countryLong] = [];
+      }
+      groupedVpns[vpn.countryLong]!.add(vpn);
+    }
+
+    return groupedVpns.values.toList();
+  }
+
+  Widget _loadingWidget() => SizedBox(
         width: double.infinity,
         height: double.infinity,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            //lottie animation
             LottieBuilder.asset('assets/lottie/loading.json',
                 width: mediaQuery.width * .7),
-
-            //text
             Text(
               'Loading VPNs... 😌',
               style: TextStyle(
@@ -86,7 +94,7 @@ class LocationScreen extends StatelessWidget {
         ),
       );
 
-  _noVPNFound() => Center(
+  Widget _noVPNFound() => Center(
         child: Text(
           'VPNs Not Found! 😔',
           style: TextStyle(

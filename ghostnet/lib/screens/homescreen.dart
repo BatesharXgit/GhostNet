@@ -14,8 +14,8 @@ import '../widgets/change_theme.dart';
 import 'location.dart';
 import 'network_test.dart';
 
-class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
+class GhostHome extends StatelessWidget {
+  GhostHome({super.key});
 
   final _controller = Get.put(HomeController());
 
@@ -27,15 +27,13 @@ class HomeScreen extends StatelessWidget {
     });
 
     return Scaffold(
-      //app bar
       appBar: AppBar(
         leading: Icon(CupertinoIcons.home),
         title: Text('Overseas'),
         actions: [
           IconButton(
               onPressed: () {
-                //ad dialog
-
+                //loads rewarded ad
                 if (Config.hideAds) {
                   Get.changeThemeMode(
                       Pref.isDarkMode ? ThemeMode.light : ThemeMode.dark);
@@ -44,7 +42,7 @@ class HomeScreen extends StatelessWidget {
                 }
 
                 Get.dialog(WatchAdThemeDialog(onComplete: () {
-                  //watch ad to gain reward
+                  //watch ad to gain reward(change theme)
                   AdHelper.showRewardedAd(onComplete: () {
                     Get.changeThemeMode(
                         Pref.isDarkMode ? ThemeMode.light : ThemeMode.dark);

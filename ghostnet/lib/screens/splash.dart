@@ -19,14 +19,19 @@ class _SplashScreenState extends State<SplashScreen> {
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
       AdHelper.precacheInterstitialAd();
       AdHelper.precacheNativeAd();
-      Get.off(() => HomeScreen());
+      Get.off(() => GhostHome());
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: Image.asset('assets/images/logo.png')),
+      body: Center(
+          child: Image.asset(
+        'assets/images/logo.png',
+        width: 500,
+        height: 500,
+      )),
     );
   }
 }

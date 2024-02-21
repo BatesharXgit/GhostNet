@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:overseas/screens/location.dart';
 import '../controllers/home_controller.dart';
 import '../helpers/ad_helper.dart';
 import '../helpers/config.dart';
@@ -11,7 +12,6 @@ import '../services/vpn_engine.dart';
 import '../widgets/count_down_timer.dart';
 import '../widgets/home_card.dart';
 import '../widgets/change_theme.dart';
-import 'location_screen.dart';
 import 'network_test_screen.dart';
 
 class HomeScreen extends StatelessWidget {
