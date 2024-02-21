@@ -1,6 +1,6 @@
 {
-    "name": "ghostnet",
-    "short_name": "ghostnet",
+    "name": "vpn",
+    "short_name": "vpn",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

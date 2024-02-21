@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "458604254661",
+    "project_id": "overseas-c47b0",
+    "storage_bucket": "overseas-c47b0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:458604254661:android:d3299411353307611da7ac",
+        "android_client_info": {
+          "package_name": "com.xd.vpn"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzAKXwCRk_o72uMjeRXjKdof-Yp724IEA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
