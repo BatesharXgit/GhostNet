@@ -8,8 +8,8 @@ import '../models/ip_details.dart';
 import '../models/network_data.dart';
 import '../widgets/network_card.dart';
 
-class NetworkTestScreen extends StatelessWidget {
-  const NetworkTestScreen({super.key});
+class NetworkInformation extends StatelessWidget {
+  const NetworkInformation({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,15 +20,6 @@ class NetworkTestScreen extends StatelessWidget {
       appBar: AppBar(title: Text('Network Test Screen')),
 
       //refresh button
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 10, right: 10),
-        child: FloatingActionButton(
-            onPressed: () {
-              ipData.value = IPDetails.fromJson({});
-              APIs.getIPDetails(ipData: ipData);
-            },
-            child: Icon(CupertinoIcons.refresh)),
-      ),
 
       body: Obx(
         () => ListView(

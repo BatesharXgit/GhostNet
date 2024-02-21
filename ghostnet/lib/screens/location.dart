@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:lottie/lottie.dart';
-
 import '../controllers/location_controller.dart';
 import '../controllers/native_ad_controller.dart';
 import '../helpers/ad_helper.dart';
@@ -26,7 +25,12 @@ class LocationScreen extends StatelessWidget {
     return Obx(
       () => Scaffold(
         appBar: AppBar(
-          title: Text('Servers (${_controller.vpnList.length})'),
+          centerTitle: false,
+          forceMaterialTransparency: true,
+          title: Text(
+            'Servers (${_controller.vpnList.length})',
+            style: GoogleFonts.orbitron(fontSize: 18),
+          ),
         ),
         bottomNavigationBar:
             _adController.ad != null && _adController.adLoaded.isTrue
@@ -58,6 +62,11 @@ class LocationScreen extends StatelessWidget {
       onRefresh: () => _controller.getVpnData(),
       child: ListView.builder(
         physics: BouncingScrollPhysics(),
+        padding: EdgeInsets.only(
+            top: mediaQuery.height * .015,
+            bottom: mediaQuery.height * .1,
+            left: mediaQuery.width * .04,
+            right: mediaQuery.width * .04),
         itemCount: groupedVpnList.length,
         itemBuilder: (context, index) {
           return VpnCard(vpnList: groupedVpnList[index]);

@@ -15,13 +15,14 @@ dependencies:
   cupertino_icons: ^1.0.2
   http: ^1.0.0
   csv: ^5.0.2
-  lottie: ^2.3.2 
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   google_mobile_ads: ^3.0.0
   firebase_core: ^2.14.0
   firebase_remote_config: ^4.2.3
   rename: ^3.0.1
+  google_fonts: ^6.1.0
+  lite_rolling_switch: ^1.0.1
 
 
 dev_dependencies:
@@ -38,3 +39,4 @@ flutter:
     - assets/images/
     - assets/lottie/
     - assets/flags/
+    - assets/theme/

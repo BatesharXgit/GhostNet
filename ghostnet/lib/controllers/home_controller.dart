@@ -15,7 +15,8 @@ class HomeController extends GetxController {
 
   void connectToVpn() async {
     if (vpn.value.openVPNConfigDataBase64.isEmpty) {
-      OverseasDialogs.info(msg: 'Select a Location by clicking \'Change Location\'');
+      OverseasDialogs.info(
+          msg: 'Select a Location by clicking \'Change Location\'');
       return;
     }
 

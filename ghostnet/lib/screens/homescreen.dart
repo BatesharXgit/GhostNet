@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../controllers/home_controller.dart';
 import '../helpers/ad_helper.dart';
 import '../helpers/config.dart';
@@ -28,39 +29,47 @@ class GhostHome extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(CupertinoIcons.home),
-        title: Text('Overseas'),
+        centerTitle: false,
+        forceMaterialTransparency: true,
+        title: Text('GhostNet', style: GoogleFonts.orbitron(fontSize: 20)),
         actions: [
-          IconButton(
-              onPressed: () {
-                //loads rewarded ad
-                if (Config.hideAds) {
-                  Get.changeThemeMode(
-                      Pref.isDarkMode ? ThemeMode.light : ThemeMode.dark);
-                  Pref.isDarkMode = !Pref.isDarkMode;
-                  return;
-                }
-
-                Get.dialog(WatchAdThemeDialog(onComplete: () {
-                  //watch ad to gain reward(change theme)
-                  AdHelper.showRewardedAd(onComplete: () {
+          Row(
+            children: [
+              Icon(
+                Icons.sunny,
+                color: Pref.isDarkMode ? null : Colors.yellow,
+              ),
+              Switch(
+                value: Pref.isDarkMode,
+                onChanged: (bool value) {
+                  //loads rewarded ad
+                  if (Config.hideAds) {
                     Get.changeThemeMode(
-                        Pref.isDarkMode ? ThemeMode.light : ThemeMode.dark);
-                    Pref.isDarkMode = !Pref.isDarkMode;
-                  });
-                }));
-              },
-              icon: Icon(
-                Icons.brightness_medium,
-                size: 26,
-              )),
+                        value ? ThemeMode.dark : ThemeMode.light);
+                    Pref.isDarkMode = value;
+                    return;
+                  }
+
+                  Get.dialog(WatchAdThemeDialog(onComplete: () {
+                    //watch ad to gain reward(change theme)
+                    AdHelper.showRewardedAd(onComplete: () {
+                      Get.changeThemeMode(
+                          value ? ThemeMode.dark : ThemeMode.light);
+                      Pref.isDarkMode = value;
+                    });
+                  }));
+                },
+              ),
+              Icon(
+                Icons.nightlight_round,
+                color: Pref.isDarkMode ? Colors.white : null,
+              ),
+            ],
+          ),
           IconButton(
-              padding: EdgeInsets.only(right: 8),
-              onPressed: () => Get.to(() => NetworkTestScreen()),
-              icon: Icon(
-                CupertinoIcons.info,
-                size: 27,
-              )),
+            icon: Icon(Icons.info_outline),
+            onPressed: () => Get.to(() => NetworkInformation()),
+          ),
         ],
       ),
 
@@ -69,7 +78,6 @@ class GhostHome extends StatelessWidget {
       //body
       body: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
         //vpn button
-        Obx(() => _vpnButton()),
 
         Obx(
           () => Row(
@@ -138,7 +146,8 @@ class GhostHome extends StatelessWidget {
                               size: 30, color: Colors.white),
                         )),
                   ],
-                ))
+                )),
+        Obx(() => _vpnButton()),
       ]),
     );
   }

@@ -26,99 +26,102 @@ class _VpnCardState extends State<VpnCard> {
 
     widget.vpnList.sort((a, b) => a.countryLong.compareTo(b.countryLong));
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        ListView.builder(
-          shrinkWrap: true,
-          physics: BouncingScrollPhysics(),
-          itemCount: showAllVpns
-              ? widget.vpnList.length
-              : min(widget.vpnList.length, 4),
-          itemBuilder: (context, index) {
-            final vpn = widget.vpnList[index];
-            return InkWell(
-              onTap: () {
-                controller.vpn.value = vpn;
-                Pref.vpn = vpn;
-                Get.back();
-                if (controller.vpnState.value == VpnEngine.vpnConnected) {
-                  VpnEngine.stopVpn();
-                  Future.delayed(
-                      Duration(seconds: 2), () => controller.connectToVpn());
-                } else {
-                  controller.connectToVpn();
-                }
-              },
-              child: ListTile(
-                leading: Container(
-                  padding: EdgeInsets.all(.5),
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black12),
-                      borderRadius: BorderRadius.circular(5)),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(5),
-                    child: Image.asset(
-                        'assets/flags/${vpn.countryShort.toLowerCase()}.png',
-                        height: 40,
-                        width: mediaQuery.width * .15,
-                        fit: BoxFit.cover),
+    return Card(
+      elevation: 5,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ListView.builder(
+            shrinkWrap: true,
+            physics: BouncingScrollPhysics(),
+            itemCount: showAllVpns
+                ? widget.vpnList.length
+                : min(widget.vpnList.length, 4),
+            itemBuilder: (context, index) {
+              final vpn = widget.vpnList[index];
+              return InkWell(
+                onTap: () {
+                  controller.vpn.value = vpn;
+                  Pref.vpn = vpn;
+                  Get.back();
+                  if (controller.vpnState.value == VpnEngine.vpnConnected) {
+                    VpnEngine.stopVpn();
+                    Future.delayed(
+                        Duration(seconds: 2), () => controller.connectToVpn());
+                  } else {
+                    controller.connectToVpn();
+                  }
+                },
+                child: ListTile(
+                  leading: Container(
+                    padding: EdgeInsets.all(.5),
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black12),
+                        borderRadius: BorderRadius.circular(5)),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(5),
+                      child: Image.asset(
+                          'assets/flags/${vpn.countryShort.toLowerCase()}.png',
+                          height: 40,
+                          width: mediaQuery.width * .15,
+                          fit: BoxFit.cover),
+                    ),
+                  ),
+                  title: Text(vpn.countryLong),
+                  subtitle: Row(
+                    children: [
+                      Icon(Icons.speed_rounded, color: Colors.blue, size: 20),
+                      SizedBox(width: 4),
+                      Text(_formatBytes(vpn.speed, 1),
+                          style: TextStyle(fontSize: 13))
+                    ],
+                  ),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(vpn.numVpnSessions.toString(),
+                          style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w500,
+                              color: Theme.of(context).lightText)),
+                      SizedBox(width: 4),
+                      Icon(CupertinoIcons.person_3, color: Colors.blue),
+                    ],
                   ),
                 ),
-                title: Text(vpn.countryLong),
-                subtitle: Row(
-                  children: [
-                    Icon(Icons.speed_rounded, color: Colors.blue, size: 20),
-                    SizedBox(width: 4),
-                    Text(_formatBytes(vpn.speed, 1),
-                        style: TextStyle(fontSize: 13))
-                  ],
-                ),
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(vpn.numVpnSessions.toString(),
-                        style: TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w500,
-                            color: Theme.of(context).lightText)),
-                    SizedBox(width: 4),
-                    Icon(CupertinoIcons.person_3, color: Colors.blue),
-                  ],
-                ),
-              ),
-            );
-          },
-        ),
-        if (widget.vpnList.length > 4)
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              if (!showAllVpns)
-                TextButton(
-                  onPressed: () {
-                    setState(() {
-                      showAllVpns = true;
-                    });
-                  },
-                  child: Text(
-                    'See More',
-                    style: TextStyle(
-                        color: Pref.isDarkMode ? Colors.white : Colors.black),
-                  ),
-                )
-              else
-                TextButton(
-                  onPressed: () {
-                    setState(() {
-                      showAllVpns = false;
-                    });
-                  },
-                  child: Text('Hide'),
-                ),
-            ],
+              );
+            },
           ),
-      ],
+          if (widget.vpnList.length > 4)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                if (!showAllVpns)
+                  TextButton(
+                    onPressed: () {
+                      setState(() {
+                        showAllVpns = true;
+                      });
+                    },
+                    child: Text(
+                      'See More',
+                      style: TextStyle(
+                          color: Pref.isDarkMode ? Colors.white : Colors.black),
+                    ),
+                  )
+                else
+                  TextButton(
+                    onPressed: () {
+                      setState(() {
+                        showAllVpns = false;
+                      });
+                    },
+                    child: Text('Hide'),
+                  ),
+              ],
+            ),
+        ],
+      ),
     );
   }
 
