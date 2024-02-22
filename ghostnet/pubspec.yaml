@@ -17,12 +17,12 @@ dependencies:
   csv: ^5.0.2
   hive: ^2.2.3
   hive_flutter: ^1.1.0
-  google_mobile_ads: ^3.0.0
+  google_mobile_ads: ^4.0.0
   firebase_core: ^2.14.0
   firebase_remote_config: ^4.2.3
   rename: ^3.0.1
   google_fonts: ^6.1.0
-  lite_rolling_switch: ^1.0.1
+  day_night_switch: ^1.0.4
 
 
 dev_dependencies:

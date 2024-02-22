@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:overseas/screens/settings.dart';
 import '../controllers/home_controller.dart';
 import '../helpers/ad_helper.dart';
 import '../helpers/config.dart';
@@ -29,43 +31,14 @@ class GhostHome extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        centerTitle: false,
+        leading: IconButton(
+          icon: Icon(Icons.settings),
+          onPressed: () => Get.to(SettingsPage()),
+        ),
         forceMaterialTransparency: true,
         title: Text('GhostNet', style: GoogleFonts.orbitron(fontSize: 20)),
         actions: [
-          Row(
-            children: [
-              Icon(
-                Icons.sunny,
-                color: Pref.isDarkMode ? null : Colors.yellow,
-              ),
-              Switch(
-                value: Pref.isDarkMode,
-                onChanged: (bool value) {
-                  //loads rewarded ad
-                  if (Config.hideAds) {
-                    Get.changeThemeMode(
-                        value ? ThemeMode.dark : ThemeMode.light);
-                    Pref.isDarkMode = value;
-                    return;
-                  }
-
-                  Get.dialog(WatchAdThemeDialog(onComplete: () {
-                    //watch ad to gain reward(change theme)
-                    AdHelper.showRewardedAd(onComplete: () {
-                      Get.changeThemeMode(
-                          value ? ThemeMode.dark : ThemeMode.light);
-                      Pref.isDarkMode = value;
-                    });
-                  }));
-                },
-              ),
-              Icon(
-                Icons.nightlight_round,
-                color: Pref.isDarkMode ? Colors.white : null,
-              ),
-            ],
-          ),
+          
           IconButton(
             icon: Icon(Icons.info_outline),
             onPressed: () => Get.to(() => NetworkInformation()),
@@ -73,82 +46,83 @@ class GhostHome extends StatelessWidget {
         ],
       ),
 
-      bottomNavigationBar: _changeLocation(context),
-
       //body
-      body: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-        //vpn button
+      body: Center(
+        child:
+            Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+          Obx(
+            () => Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                //country flag
+                HomeCard(
+                    title: _controller.vpn.value.countryLong.isEmpty
+                        ? 'Country'
+                        : _controller.vpn.value.countryLong,
+                    subtitle: 'Pro',
+                    icon: CircleAvatar(
+                      radius: 30,
+                      backgroundColor: Colors.blue,
+                      child: _controller.vpn.value.countryLong.isEmpty
+                          ? Icon(Icons.vpn_lock_rounded,
+                              size: 30, color: Colors.white)
+                          : null,
+                      backgroundImage: _controller.vpn.value.countryLong.isEmpty
+                          ? null
+                          : AssetImage(
+                              'assets/flags/${_controller.vpn.value.countryShort.toLowerCase()}.png'),
+                    )),
 
-        Obx(
-          () => Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              //country flag
-              HomeCard(
-                  title: _controller.vpn.value.countryLong.isEmpty
-                      ? 'Country'
-                      : _controller.vpn.value.countryLong,
-                  subtitle: 'FREE',
-                  icon: CircleAvatar(
-                    radius: 30,
-                    backgroundColor: Colors.blue,
-                    child: _controller.vpn.value.countryLong.isEmpty
-                        ? Icon(Icons.vpn_lock_rounded,
-                            size: 30, color: Colors.white)
-                        : null,
-                    backgroundImage: _controller.vpn.value.countryLong.isEmpty
-                        ? null
-                        : AssetImage(
-                            'assets/flags/${_controller.vpn.value.countryShort.toLowerCase()}.png'),
-                  )),
-
-              //ping time
-              HomeCard(
-                  title: _controller.vpn.value.countryLong.isEmpty
-                      ? '100 ms'
-                      : '${_controller.vpn.value.ping} ms',
-                  subtitle: 'PING',
-                  icon: CircleAvatar(
-                    radius: 30,
-                    backgroundColor: Colors.orange,
-                    child: Icon(Icons.equalizer_rounded,
-                        size: 30, color: Colors.white),
-                  )),
-            ],
+                //ping time
+                HomeCard(
+                    title: _controller.vpn.value.countryLong.isEmpty
+                        ? '100 ms'
+                        : '${_controller.vpn.value.ping} ms',
+                    subtitle: 'PING',
+                    icon: CircleAvatar(
+                      radius: 30,
+                      backgroundColor: Colors.orange,
+                      child: Icon(Icons.equalizer_rounded,
+                          size: 30, color: Colors.white),
+                    )),
+              ],
+            ),
           ),
-        ),
+          StreamBuilder<VpnStatus?>(
+              initialData: VpnStatus(),
+              stream: VpnEngine.vpnStatusSnapshot(),
+              builder: (context, snapshot) => Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      //download
+                      HomeCard(
+                          title: '${snapshot.data?.byteIn ?? '0 kbps'}',
+                          subtitle: 'DOWNLOAD',
+                          icon: CircleAvatar(
+                            radius: 30,
+                            backgroundColor: Colors.lightGreen,
+                            child: Icon(Icons.arrow_downward_rounded,
+                                size: 30, color: Colors.white),
+                          )),
 
-        StreamBuilder<VpnStatus?>(
-            initialData: VpnStatus(),
-            stream: VpnEngine.vpnStatusSnapshot(),
-            builder: (context, snapshot) => Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    //download
-                    HomeCard(
-                        title: '${snapshot.data?.byteIn ?? '0 kbps'}',
-                        subtitle: 'DOWNLOAD',
-                        icon: CircleAvatar(
-                          radius: 30,
-                          backgroundColor: Colors.lightGreen,
-                          child: Icon(Icons.arrow_downward_rounded,
-                              size: 30, color: Colors.white),
-                        )),
-
-                    //upload
-                    HomeCard(
-                        title: '${snapshot.data?.byteOut ?? '0 kbps'}',
-                        subtitle: 'UPLOAD',
-                        icon: CircleAvatar(
-                          radius: 30,
-                          backgroundColor: Colors.blue,
-                          child: Icon(Icons.arrow_upward_rounded,
-                              size: 30, color: Colors.white),
-                        )),
-                  ],
-                )),
-        Obx(() => _vpnButton()),
-      ]),
+                      //upload
+                      HomeCard(
+                          title: '${snapshot.data?.byteOut ?? '0 kbps'}',
+                          subtitle: 'UPLOAD',
+                          icon: CircleAvatar(
+                            radius: 30,
+                            backgroundColor: Colors.blue,
+                            child: Icon(Icons.arrow_upward_rounded,
+                                size: 30, color: Colors.white),
+                          )),
+                    ],
+                  )),
+          Obx(() => _vpnButton()),
+          Padding(
+              padding: EdgeInsets.fromLTRB(20, 10, 20, 20),
+              child: _changeLocation(context)),
+        ]),
+      ),
     );
   }
 
@@ -172,34 +146,40 @@ class GhostHome extends StatelessWidget {
                   padding: EdgeInsets.all(16),
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: _controller.getButtonColor.withOpacity(.3)),
+                      color: _controller.getButtonColor.withOpacity(.2)),
                   child: Container(
-                    width: mediaQuery.height * .14,
-                    height: mediaQuery.height * .14,
+                    padding: EdgeInsets.all(16),
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: _controller.getButtonColor),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        //icon
-                        Icon(
-                          Icons.power_settings_new,
-                          size: 28,
-                          color: Colors.white,
-                        ),
+                        color: _controller.getButtonColor.withOpacity(.3)),
+                    child: Container(
+                      width: mediaQuery.height * .14,
+                      height: mediaQuery.height * .14,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: _controller.getButtonColor),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          //icon
+                          Icon(
+                            Icons.power_settings_new,
+                            size: 28,
+                            color: Colors.white,
+                          ),
 
-                        SizedBox(height: 4),
+                          SizedBox(height: 4),
 
-                        //text
-                        Text(
-                          _controller.getButtonText,
-                          style: TextStyle(
-                              fontSize: 12.5,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500),
-                        )
-                      ],
+                          //text
+                          Text(
+                            _controller.getButtonText,
+                            style: TextStyle(
+                                fontSize: 12.5,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),

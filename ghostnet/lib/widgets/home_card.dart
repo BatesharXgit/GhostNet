@@ -17,30 +17,37 @@ class HomeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
         width: mediaQuery.width * .45,
-        child: Column(
-          children: [
-            //icon
-            icon,
+        child: Card(
+          child: Row(
+            children: [
+              //icon
+              icon,
 
-            //for adding some space
-            const SizedBox(height: 6),
+              //for adding some space
+              const SizedBox(width: 6),
 
-            //title
-            Text(title,
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+              //title
+              Column(
+                children: [
+                  Text(title,
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
 
-            //for adding some space
-            const SizedBox(height: 6),
+                  //for adding some space
+                  const SizedBox(height: 6),
 
-            //subtitle
-            Text(
-              subtitle,
-              style: TextStyle(
-                  color: Theme.of(context).lightText,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 12),
-            ),
-          ],
+                  //subtitle
+                  Text(
+                    subtitle,
+                    style: TextStyle(
+                        color: Theme.of(context).lightText,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 12),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ));
   }
 }
