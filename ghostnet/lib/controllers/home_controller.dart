@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:overseas/main.dart';
 import '../helpers/ad_helper.dart';
 import '../helpers/my_dialogs.dart';
 import '../helpers/prefs.dart';
@@ -15,8 +16,7 @@ class HomeController extends GetxController {
 
   void connectToVpn() async {
     if (vpn.value.openVPNConfigDataBase64.isEmpty) {
-      OverseasDialogs.info(
-          msg: 'Select a Location by clicking \'Change Location\'');
+      OverseasDialogs.info(msg: 'Select a Location to Connect to VPN');
       return;
     }
 
@@ -46,13 +46,13 @@ class HomeController extends GetxController {
   Color get getButtonColor {
     switch (vpnState.value) {
       case VpnEngine.vpnDisconnected:
-        return Colors.blue;
+        return Colors.red;
 
       case VpnEngine.vpnConnected:
         return Colors.green;
 
       default:
-        return Colors.orangeAccent;
+        return Pref.isDarkMode ? Color(0xFFDCE2FA) : Color(0xff131321);
     }
   }
 

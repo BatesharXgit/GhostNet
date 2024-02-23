@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CountDownTimer extends StatefulWidget {
   final bool startTimer;
@@ -40,6 +41,11 @@ class _CountDownTimerState extends State<CountDownTimer> {
     final seconds = twoDigit(_duration.inSeconds.remainder(60));
     final hours = twoDigit(_duration.inHours.remainder(60));
 
-    return Text('$hours: $minutes: $seconds', style: TextStyle(fontSize: 22));
+    return Text('$hours:$minutes:$seconds',
+        style: GoogleFonts.kanit(
+            fontSize: 40,
+            fontWeight: FontWeight.bold,
+            wordSpacing: 0.2,
+            color: Colors.white));
   }
 }
