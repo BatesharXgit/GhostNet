@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/route_manager.dart';
+import 'package:overseas/screens/homescreen.dart';
 
 import '../helpers/ad_helper.dart';
-import 'home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -24,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
       AdHelper.precacheNativeAd();
 
       //navigate to home
-      Get.off(() => HomeScreen());
+      Get.off(() => GhostHome());
       // Navigator.pushReplacement(
       //     context, MaterialPageRoute(builder: (_) => HomeScreen()));
     });

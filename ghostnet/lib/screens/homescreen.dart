@@ -23,177 +23,70 @@ class GhostHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ipData = IPDetails.fromJson({}).obs;
-    APIs.getIPDetails(ipData: ipData);
-
     ///Add listener to update vpn state
     VpnEngine.vpnStageSnapshot().listen((event) {
       _controller.vpnState.value = event;
     });
 
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.settings),
-          onPressed: () => Get.to(SettingsPage()),
-        ),
-        forceMaterialTransparency: true,
-        title: Text('GhostNet', style: GoogleFonts.orbitron(fontSize: 20)),
-      ),
+      backgroundColor: Theme.of(context).backgroundColour,
 
       //body
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Obx(
-                  () => Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      //country flag
-                      HomeCard(
-                          title: _controller.vpn.value.countryLong.isEmpty
-                              ? 'Country'
-                              : _controller.vpn.value.countryLong,
-                          subtitle: 'Pro',
-                          icon: CircleAvatar(
-                            radius: 30,
-                            backgroundColor: Colors.blue,
-                            child: _controller.vpn.value.countryLong.isEmpty
-                                ? Icon(Icons.vpn_lock_rounded,
-                                    size: 30, color: Colors.white)
-                                : null,
-                            backgroundImage: _controller
-                                    .vpn.value.countryLong.isEmpty
-                                ? null
-                                : AssetImage(
-                                    'assets/flags/${_controller.vpn.value.countryShort.toLowerCase()}.png'),
-                          )),
-
-                      //ping time
-                      HomeCard(
-                          title: _controller.vpn.value.countryLong.isEmpty
-                              ? '100 ms'
-                              : '${_controller.vpn.value.ping} ms',
-                          subtitle: 'PING',
-                          icon: CircleAvatar(
-                            radius: 30,
-                            backgroundColor: Colors.orange,
-                            child: Icon(Icons.equalizer_rounded,
-                                size: 30, color: Colors.white),
-                          )),
-                    ],
+      body: Stack(
+        children: [
+          Positioned(
+              child: Image.asset(
+            height: 500,
+            'assets/flags/world.png',
+            fit: BoxFit.cover,
+          )),
+          Center(
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SizedBox(
+                    height: 100,
                   ),
-                ),
-                StreamBuilder<VpnStatus?>(
-                    initialData: VpnStatus(),
-                    stream: VpnEngine.vpnStatusSnapshot(),
-                    builder: (context, snapshot) => Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            //download
-                            HomeCard(
-                                title: '${snapshot.data?.byteIn ?? '0 kbps'}',
-                                subtitle: 'DOWNLOAD',
-                                icon: CircleAvatar(
-                                  radius: 30,
-                                  backgroundColor: Colors.lightGreen,
-                                  child: Icon(Icons.arrow_downward_rounded,
-                                      size: 30, color: Colors.white),
-                                )),
 
-                            //upload
-                            HomeCard(
-                                title: '${snapshot.data?.byteOut ?? '0 kbps'}',
-                                subtitle: 'UPLOAD',
-                                icon: CircleAvatar(
-                                  radius: 30,
-                                  backgroundColor: Colors.blue,
-                                  child: Icon(Icons.arrow_upward_rounded,
-                                      size: 30, color: Colors.white),
-                                )),
-                          ],
-                        )),
-                Obx(() => _vpnButton()),
-                Padding(
-                    padding: EdgeInsets.fromLTRB(20, 10, 20, 20),
-                    child: _changeLocation(context)),
-                ListView.builder(
-                  physics: BouncingScrollPhysics(),
-                  shrinkWrap: true,
-                  padding: EdgeInsets.only(
-                      left: mediaQuery.width * .04,
-                      right: mediaQuery.width * .04,
-                      top: mediaQuery.height * .01,
-                      bottom: mediaQuery.height * .1),
-                  itemCount: 5, // Number of items in your list
-                  itemBuilder: (context, index) {
-                    switch (index) {
-                      case 0:
-                        return Obx(() => NetworkCard(
-                              data: NetworkData(
-                                title: 'IP Address',
-                                subtitle: ipData.value.query,
-                                icon: Icon(
-                                  CupertinoIcons.location_solid,
-                                  color: Colors.blue,
-                                ),
-                              ),
-                            ));
-                      case 1:
-                        return Obx(() => NetworkCard(
-                              data: NetworkData(
-                                title: 'Internet Provider',
-                                subtitle: ipData.value.isp,
-                                icon: Icon(
-                                  Icons.business,
-                                  color: Colors.orange,
-                                ),
-                              ),
-                            ));
-                      case 2:
-                        return Obx(() => NetworkCard(
-                              data: NetworkData(
-                                title: 'Location',
-                                subtitle: ipData.value.country.isEmpty
-                                    ? 'Fetching ...'
-                                    : '${ipData.value.city}, ${ipData.value.regionName}, ${ipData.value.country}',
-                                icon: Icon(
-                                  CupertinoIcons.location,
-                                  color: Colors.pink,
-                                ),
-                              ),
-                            ));
-                      case 3:
-                        return Obx(() => NetworkCard(
-                              data: NetworkData(
-                                title: 'Pin-code',
-                                subtitle: ipData.value.zip,
-                                icon: Icon(
-                                  CupertinoIcons.location_solid,
-                                  color: Colors.cyan,
-                                ),
-                              ),
-                            ));
-                      case 4:
-                        return Obx(() => NetworkCard(
-                              data: NetworkData(
-                                title: 'Timezone',
-                                subtitle: ipData.value.timezone,
-                                icon: Icon(
-                                  CupertinoIcons.time,
-                                  color: Colors.green,
-                                ),
-                              ),
-                            ));
-                      default:
-                        return SizedBox.shrink();
-                    }
-                  },
-                ),
-              ]),
-        ),
+                  StreamBuilder<VpnStatus?>(
+                      initialData: VpnStatus(),
+                      stream: VpnEngine.vpnStatusSnapshot(),
+                      builder: (context, snapshot) => Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              //download
+                              HomeCard(
+                                  title: '${snapshot.data?.byteIn ?? '0 kbps'}',
+                                  subtitle: 'DOWNLOAD',
+                                  icon: CircleAvatar(
+                                    radius: 30,
+                                    backgroundColor: Colors.lightGreen,
+                                    child: Icon(Icons.arrow_downward_rounded,
+                                        size: 30, color: Colors.white),
+                                  )),
+
+                              //upload
+                              HomeCard(
+                                  title:
+                                      '${snapshot.data?.byteOut ?? '0 kbps'}',
+                                  subtitle: 'UPLOAD',
+                                  icon: CircleAvatar(
+                                    radius: 30,
+                                    backgroundColor: Colors.blue,
+                                    child: Icon(Icons.arrow_upward_rounded,
+                                        size: 30, color: Colors.white),
+                                  )),
+                            ],
+                          )),
+                  // Obx(() => _vpnButton()),
+                  _vpnButton(),
+
+                  Padding(
+                      padding: EdgeInsets.fromLTRB(20, 10, 20, 20),
+                      child: _changeLocation(context)),
+                ]),
+          ),
+        ],
       ),
     );
   }
@@ -281,27 +174,41 @@ class GhostHome extends StatelessWidget {
         ],
       );
 
-  //bottom nav to change location
   Widget _changeLocation(BuildContext context) => SafeArea(
           child: Semantics(
         button: true,
         child: InkWell(
           onTap: () => Get.to(() => LocationScreen()),
           child: Container(
-              color: Theme.of(context).bottomNav,
+              decoration: BoxDecoration(
+                  color: Theme.of(context).bottomNav,
+                  borderRadius: BorderRadius.circular(30)),
               padding: EdgeInsets.symmetric(horizontal: mediaQuery.width * .04),
               height: 60,
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  //icon
-                  Icon(CupertinoIcons.globe, color: Colors.white, size: 28),
+                  CircleAvatar(
+                    radius: 20,
+                    backgroundColor: Colors.blue,
+                    child: _controller.vpn.value.countryLong.isEmpty
+                        ? Icon(Icons.vpn_lock_rounded,
+                            size: 30, color: Colors.white)
+                        : null,
+                    backgroundImage: _controller.vpn.value.countryLong.isEmpty
+                        ? null
+                        : AssetImage(
+                            'assets/flags/${_controller.vpn.value.countryShort.toLowerCase()}.png'),
+                  ),
 
                   //for adding some space
                   SizedBox(width: 10),
 
                   //text
                   Text(
-                    'Change Location',
+                    _controller.vpn.value.countryLong.isEmpty
+                        ? 'Country'
+                        : _controller.vpn.value.countryLong,
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,
@@ -310,13 +217,22 @@ class GhostHome extends StatelessWidget {
 
                   //for covering available spacing
                   Spacer(),
-
+                  Icon(Icons.equalizer_rounded, size: 26, color: Colors.white),
+                  Text(
+                    _controller.vpn.value.countryLong.isEmpty
+                        ? '100 ms'
+                        : '${_controller.vpn.value.ping} ms',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(
+                    width: 8,
+                  ),
                   //icon
-                  CircleAvatar(
-                    backgroundColor: Colors.white,
-                    child: Icon(Icons.keyboard_arrow_right_rounded,
-                        color: Colors.blue, size: 26),
-                  )
+                  Icon(Icons.keyboard_arrow_right_rounded,
+                      color: Colors.white, size: 26)
                 ],
               )),
         ),
