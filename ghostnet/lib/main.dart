@@ -37,8 +37,7 @@ class MyApp extends StatelessWidget {
       home: SplashScreen(),
       theme:
           ThemeData(appBarTheme: AppBarTheme(centerTitle: true, elevation: 3)),
-      // themeMode: Pref.isDarkMode ? ThemeMode.dark : ThemeMode.light,
-      themeMode: ThemeMode.dark,
+      themeMode: Pref.isDarkMode ? ThemeMode.dark : ThemeMode.light,
       darkTheme: ThemeData(
           brightness: Brightness.dark,
           appBarTheme: AppBarTheme(centerTitle: true, elevation: 3)),
