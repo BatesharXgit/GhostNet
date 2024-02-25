@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'firebase_options.dart';
 import 'helpers/ad_helper.dart';
 import 'helpers/config.dart';
@@ -13,6 +14,7 @@ late Size mediaQuery;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+  MobileAds.instance.initialize();
   await Firebase.initializeApp();
   await Config.initConfig();
   await Pref.initializeHive();
@@ -47,8 +49,9 @@ class MyApp extends StatelessWidget {
 }
 
 extension AppTheme on ThemeData {
-  Color get backgroundColour =>
-      Pref.isDarkMode ? Color(0xff131321) : Color(0xFFDCE2FA);
+  Color get backgroundColour => Pref.isDarkMode
+      ? Color.fromARGB(255, 28, 28, 48)
+      : Color.fromARGB(255, 194, 200, 222);
   Color get primaryColour =>
       Pref.isDarkMode ? Color(0xFFDCE2FA) : Color(0xff131321);
   Color get lightText =>

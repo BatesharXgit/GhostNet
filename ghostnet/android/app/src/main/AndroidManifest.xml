@@ -15,7 +15,9 @@
         android:name="${applicationName}"
         android:label="GhostNet"
         android:icon="@mipmap/ic_launcher"
-        tools:ignore="AllowBackup">
+        tools:ignore="AllowBackup"
+        android:enableOnBackInvokedCallback="true">
+        
         
         <!-- For Ads -->
         <meta-data

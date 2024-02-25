@@ -6,6 +6,8 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iconly/iconly.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:overseas/apis/apis.dart';
 import 'package:overseas/helpers/ad_helper.dart';
 import 'package:overseas/helpers/config.dart';
@@ -38,68 +40,184 @@ class GhostHome extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColour,
+      // backgroundColor: Color.fromARGB(255, 22, 22, 26),
+
       //body
       body: Stack(
         children: [
-          Image.asset(
-            'assets/flags/world.png',
-            fit: BoxFit.cover,
+          Container(
+            // height: mediaQuery.height * .4,
             height: 400,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/dot.png'),
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
           Center(
             child: Column(
                 // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  SizedBox(
-                    height: 100,
-                  ),
-                  Switch(
-                    value: Pref.isDarkMode,
-                    onChanged: (bool value) {
-                      //loads rewarded ad
-                      if (Config.hideAds) {
-                        Get.changeThemeMode(
-                            value ? ThemeMode.dark : ThemeMode.light);
-                        Pref.isDarkMode = value;
-                        return;
-                      }
-
-                      Get.dialog(WatchAdThemeDialog(onComplete: () {
-                        //watch ad to gain reward(change theme)
-                        AdHelper.showRewardedAd(onComplete: () {
-                          Get.changeThemeMode(
-                              value ? ThemeMode.dark : ThemeMode.light);
-                          Pref.isDarkMode = value;
-                        });
-                      }));
-                    },
-                  ),
-                  //connection status label
-                  Text(
-                    _controller.vpnState.value == VpnEngine.vpnDisconnected
-                        ? 'Not Connected'
-                        : _controller.vpnState
-                            .replaceAll('_', ' ')
-                            .toUpperCase(),
-                    style: GoogleFonts.kanit(
-                      color: Theme.of(context).backgroundColour,
-                      fontSize: 16,
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 40, 10, 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.transparent,
+                            shape: BoxShape.circle,
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(200),
+                            child: BackdropFilter(
+                              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.black.withOpacity(0.2),
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.1),
+                                      spreadRadius: 5,
+                                      blurRadius: 7,
+                                      offset: Offset(0, 3),
+                                    ),
+                                  ],
+                                ),
+                                child: IconButton(
+                                  onPressed: () => Get.to(NetworkInformation()),
+                                  icon: Icon(
+                                    Iconsax.info_circle,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.transparent,
+                            shape: BoxShape.circle,
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(200),
+                            child: BackdropFilter(
+                              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.black.withOpacity(0.2),
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.1),
+                                      spreadRadius: 5,
+                                      blurRadius: 7,
+                                      offset: Offset(0, 3),
+                                    ),
+                                  ],
+                                ),
+                                child: IconButton(
+                                  onPressed: () => Get.to(SettingsPage()),
+                                  icon: Icon(
+                                    Iconsax.setting_3,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-
-                  //count down timer
-                  Obx(() => CountDownTimer(
-                      startTimer: _controller.vpnState.value ==
-                          VpnEngine.vpnConnected)),
-
-                  Padding(
-                      padding: EdgeInsets.fromLTRB(20, 10, 20, 20),
-                      child: _changeLocation(context)),
-
-                  // Obx(() => _vpnButton()),
+                  SizedBox(
+                    height: mediaQuery.height * .08,
+                  ),
+                  Text(
+                    'GhostNet',
+                    style: GoogleFonts.orbitron(
+                      color: Theme.of(context).primaryColour,
+                      fontSize: 42,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(
+                    height: mediaQuery.height * .04,
+                  ),
+                  Obx(
+                    () => Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          _controller.vpnState.value ==
+                                  VpnEngine.vpnDisconnected
+                              ? 'Not Connected'
+                              : _controller.vpnState
+                                  .replaceAll('_', ' ')
+                                  .toUpperCase(),
+                          style: GoogleFonts.kanit(
+                            color: Colors.white,
+                            fontSize: 16,
+                          ),
+                        ),
+                        CountDownTimer(
+                            startTimer: _controller.vpnState.value ==
+                                VpnEngine.vpnConnected)
+                      ],
+                    ),
+                  ),
+                  Obx(
+                    () => Padding(
+                      padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                      child: Container(
+                        height: 70,
+                        decoration: BoxDecoration(
+                          color: Colors.transparent,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        width: mediaQuery.width,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: BackdropFilter(
+                            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                            child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: mediaQuery.width * .04),
+                                height: 70,
+                                decoration: BoxDecoration(
+                                  color: Colors.black.withOpacity(0.2),
+                                  borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(20),
+                                    topLeft: Radius.circular(20),
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.1),
+                                      spreadRadius: 5,
+                                      blurRadius: 7,
+                                      offset: Offset(0, 3),
+                                    ),
+                                  ],
+                                ),
+                                child: _changeLocation(context)),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ]),
           ),
-          Positioned(bottom: -310, left: 0, right: 0, child: _vpnButton()),
+          Obx(
+            () =>
+                Positioned(bottom: -10, left: 0, right: 0, child: _vpnButton()),
+          ),
           Positioned(
             bottom: 0,
             child: Container(
@@ -116,12 +234,12 @@ class GhostHome extends StatelessWidget {
                   topLeft: Radius.circular(20),
                 ),
                 child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
+                  filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     height: mediaQuery.height * 0.22,
                     decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.4),
+                      color: Colors.black.withOpacity(0.2),
                       borderRadius: BorderRadius.only(
                         topRight: Radius.circular(20),
                         topLeft: Radius.circular(20),
@@ -212,7 +330,8 @@ class GhostHome extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(bottom: 120, left: 0, right: 0, child: _mainVPNButton())
+          Obx(() => Positioned(
+              bottom: 120, left: 0, right: 0, child: _mainVPNButton())),
         ],
       ),
     );
@@ -225,22 +344,22 @@ class GhostHome extends StatelessWidget {
           Semantics(
             button: true,
             child: Container(
-              padding: EdgeInsets.all(34),
+              padding: EdgeInsets.all(38),
               decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: _controller.getButtonColor.withOpacity(.1)),
               child: Container(
-                padding: EdgeInsets.all(34),
+                padding: EdgeInsets.all(40),
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: _controller.getButtonColor.withOpacity(.2)),
                 child: Container(
-                  padding: EdgeInsets.all(34),
+                  padding: EdgeInsets.all(38),
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: _controller.getButtonColor.withOpacity(.3)),
                   child: Container(
-                    padding: EdgeInsets.all(34),
+                    padding: EdgeInsets.all(36),
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: _controller.getButtonColor.withOpacity(.4)),
@@ -249,13 +368,13 @@ class GhostHome extends StatelessWidget {
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: _controller.getButtonColor.withOpacity(.5)),
-                      child: Container(
-                        width: mediaQuery.height * .8,
-                        height: mediaQuery.height * .8,
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: _controller.getButtonColor),
-                      ),
+                      // child: Container(
+                      //   width: mediaQuery.height * .8,
+                      //   height: mediaQuery.height * .8,
+                      //   decoration: BoxDecoration(
+                      //       shape: BoxShape.circle,
+                      //       color: _controller.getButtonColor),
+                      // ),
                     ),
                   ),
                 ),
@@ -301,67 +420,63 @@ class GhostHome extends StatelessWidget {
     );
   }
 
-  Widget _changeLocation(BuildContext context) => SafeArea(
-          child: Semantics(
+  Widget _changeLocation(BuildContext context) => Semantics(
         button: true,
         child: InkWell(
           onTap: () => Get.to(() => LocationScreen()),
-          child: Container(
-              decoration: BoxDecoration(
-                  color: Theme.of(context).bottomNav,
-                  borderRadius: BorderRadius.circular(30)),
-              padding: EdgeInsets.symmetric(horizontal: mediaQuery.width * .04),
-              height: 60,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  CircleAvatar(
-                    radius: 20,
-                    backgroundColor: Colors.blue,
-                    child: _controller.vpn.value.countryLong.isEmpty
-                        ? Icon(Icons.vpn_lock_rounded,
-                            size: 30, color: Colors.white)
-                        : null,
-                    backgroundImage: _controller.vpn.value.countryLong.isEmpty
-                        ? null
-                        : AssetImage(
-                            'assets/flags/${_controller.vpn.value.countryShort.toLowerCase()}.png'),
-                  ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CircleAvatar(
+                radius: 20,
+                backgroundColor: Colors.blue,
+                child: _controller.vpn.value.countryLong.isEmpty
+                    ? Icon(Icons.vpn_lock_rounded,
+                        size: 30, color: Colors.white)
+                    : null,
+                backgroundImage: _controller.vpn.value.countryLong.isEmpty
+                    ? null
+                    : AssetImage(
+                        'assets/flags/${_controller.vpn.value.countryShort.toLowerCase()}.png'),
+              ),
 
-                  //for adding some space
-                  SizedBox(width: 10),
+              //for adding some space
+              SizedBox(width: 10),
 
-                  //text
-                  Text(
-                    _controller.vpn.value.countryLong.isEmpty
-                        ? 'Country'
+              //text
+              Text(
+                _controller.vpn.value.countryLong.isEmpty
+                    ? 'Country'
+                    : _controller.vpn.value.countryLong.length > 10
+                        ? _controller.vpn.value.countryLong.substring(0,
+                            _controller.vpn.value.countryLong.lastIndexOf(' '))
                         : _controller.vpn.value.countryLong,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500),
-                  ),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
 
-                  //for covering available spacing
-                  Spacer(),
-                  Icon(Icons.equalizer_rounded, size: 26, color: Colors.white),
-                  Text(
-                    _controller.vpn.value.countryLong.isEmpty
-                        ? '100 ms'
-                        : '${_controller.vpn.value.ping} ms',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500),
-                  ),
-                  SizedBox(
-                    width: 8,
-                  ),
-                  //icon
-                  Icon(Icons.keyboard_arrow_right_rounded,
-                      color: Colors.white, size: 26)
-                ],
-              )),
+              //for covering available spacing
+              Spacer(),
+              Icon(Icons.equalizer_rounded, size: 26, color: Colors.white),
+              Text(
+                _controller.vpn.value.countryLong.isEmpty
+                    ? '100 ms'
+                    : '${_controller.vpn.value.ping} ms',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500),
+              ),
+              SizedBox(
+                width: 8,
+              ),
+              //icon
+              Icon(Iconsax.arrow_right_2, color: Colors.white, size: 26)
+            ],
+          ),
         ),
-      ));
+      );
 }
