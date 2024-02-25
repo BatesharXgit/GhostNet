@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -24,13 +25,17 @@ class NetworkInformation extends StatelessWidget {
       backgroundColor: Theme.of(context).backgroundColour,
       body: Stack(
         children: [
-          Container(
-            // height: mediaQuery.height * .4,
-            // height: 400,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/dot.png'),
-                fit: BoxFit.cover,
+          Transform(
+            alignment: Alignment.center,
+            transform: Matrix4.rotationX(3.141592653589793),
+            child: Container(
+              // height: mediaQuery.height * .4,
+              // height: 400,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/images/dot.png'),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),

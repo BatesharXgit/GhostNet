@@ -62,44 +62,8 @@ class GhostHome extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(10, 40, 10, 0),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.transparent,
-                            shape: BoxShape.circle,
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(200),
-                            child: BackdropFilter(
-                              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.black.withOpacity(0.2),
-                                  shape: BoxShape.circle,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(0.1),
-                                      spreadRadius: 5,
-                                      blurRadius: 7,
-                                      offset: Offset(0, 3),
-                                    ),
-                                  ],
-                                ),
-                                child: IconButton(
-                                  onPressed: () => Get.to(NetworkInformation()),
-                                  icon: Icon(
-                                    Iconsax.info_circle,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 8,
-                        ),
                         Container(
                           decoration: BoxDecoration(
                             color: Colors.transparent,
@@ -127,6 +91,55 @@ class GhostHome extends StatelessWidget {
                                   icon: Icon(
                                     Iconsax.setting_3,
                                     color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.transparent,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: BackdropFilter(
+                              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.black.withOpacity(0.2),
+                                  borderRadius: BorderRadius.circular(20),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.1),
+                                      spreadRadius: 5,
+                                      blurRadius: 7,
+                                      offset: Offset(0, 3),
+                                    ),
+                                  ],
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(right: 8.0),
+                                  child: Row(
+                                    children: [
+                                      IconButton(
+                                        onPressed: () =>
+                                            Get.to(NetworkInformation()),
+                                        icon: Icon(
+                                          Iconsax.info_circle,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      Text(
+                                        "Information",
+                                        style: GoogleFonts.openSans(
+                                            fontSize: 14, color: Colors.white),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
