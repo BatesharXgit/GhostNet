@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:overseas/helpers/ad_helper.dart';
-import 'package:overseas/helpers/config.dart';
-import 'package:overseas/helpers/prefs.dart';
-import 'package:overseas/widgets/change_theme.dart';
+import 'package:ghostnet/helpers/ad_helper.dart';
+import 'package:ghostnet/helpers/config.dart';
+import 'package:ghostnet/helpers/prefs.dart';
+import 'package:ghostnet/widgets/change_theme.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});

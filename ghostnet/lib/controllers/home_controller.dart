@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:overseas/main.dart';
+import 'package:ghostnet/main.dart';
 import '../helpers/ad_helper.dart';
 import '../helpers/my_dialogs.dart';
 import '../helpers/prefs.dart';

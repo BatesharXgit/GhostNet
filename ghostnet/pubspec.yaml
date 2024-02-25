@@ -1,4 +1,4 @@
-name: overseas
+name: ghostnet
 description: VPN app.
 publish_to: 'none'
 
@@ -38,6 +38,4 @@ flutter:
     - assets/
     - assets/vpn/
     - assets/images/
-    - assets/lottie/
     - assets/flags/
-    - assets/theme/
