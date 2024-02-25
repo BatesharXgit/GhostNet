@@ -1,12 +1,13 @@
 import 'dart:ui';
 
+import 'package:animate_do/animate_do.dart';
+import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconly/iconly.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:overseas/apis/apis.dart';
 import 'package:overseas/helpers/ad_helper.dart';
@@ -45,79 +46,42 @@ class GhostHome extends StatelessWidget {
       //body
       body: Stack(
         children: [
-          Container(
-            // height: mediaQuery.height * .4,
-            height: 400,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/dot.png'),
-                fit: BoxFit.cover,
+          FadeInDown(
+            child: Container(
+              // height: mediaQuery.height * .4,
+              height: 400,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/images/dot.png'),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
           Center(
-            child: Column(
-                // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 40, 10, 0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.transparent,
-                            shape: BoxShape.circle,
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(200),
-                            child: BackdropFilter(
-                              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.black.withOpacity(0.2),
-                                  shape: BoxShape.circle,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(0.1),
-                                      spreadRadius: 5,
-                                      blurRadius: 7,
-                                      offset: Offset(0, 3),
-                                    ),
-                                  ],
-                                ),
-                                child: IconButton(
-                                  onPressed: () => Get.to(SettingsPage(),
-                                      transition: Transition.cupertino),
-                                  icon: Icon(
-                                    Iconsax.setting_3,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        InkWell(
-                          onTap: () => Get.to(NetworkInformation(),
-                              transition: Transition.cupertino),
-                          child: Container(
+            child: FadeIn(
+              child: Column(
+                  // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(10, 40, 10, 0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
                             decoration: BoxDecoration(
                               color: Colors.transparent,
-                              borderRadius: BorderRadius.circular(20),
+                              shape: BoxShape.circle,
                             ),
                             child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
+                              borderRadius: BorderRadius.circular(200),
                               child: BackdropFilter(
                                 filter:
                                     ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                                 child: Container(
                                   decoration: BoxDecoration(
                                     color: Colors.black.withOpacity(0.2),
-                                    borderRadius: BorderRadius.circular(20),
+                                    shape: BoxShape.circle,
                                     boxShadow: [
                                       BoxShadow(
                                         color: Colors.black.withOpacity(0.1),
@@ -127,222 +91,274 @@ class GhostHome extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(right: 8.0),
-                                    child: Row(
-                                      children: [
-                                        IconButton(
-                                          onPressed: () => Get.to(
-                                              NetworkInformation(),
-                                              transition: Transition.cupertino),
-                                          icon: Icon(
-                                            Iconsax.info_circle,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                        Text(
-                                          "Information",
-                                          style: GoogleFonts.openSans(
-                                              fontSize: 14,
-                                              color: Colors.white),
+                                  child: IconButton(
+                                    onPressed: () => Get.to(SettingsPage(),
+                                        transition: Transition.cupertino),
+                                    icon: Icon(
+                                      Iconsax.setting_3,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 8,
+                          ),
+                          InkWell(
+                            onTap: () => Get.to(NetworkInformation(),
+                                transition: Transition.cupertino),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.transparent,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(20),
+                                child: BackdropFilter(
+                                  filter:
+                                      ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.black.withOpacity(0.2),
+                                      borderRadius: BorderRadius.circular(20),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.1),
+                                          spreadRadius: 5,
+                                          blurRadius: 7,
+                                          offset: Offset(0, 3),
                                         ),
                                       ],
                                     ),
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsets.only(right: 8.0),
+                                      child: Row(
+                                        children: [
+                                          IconButton(
+                                            onPressed: () => Get.to(
+                                                NetworkInformation(),
+                                                transition:
+                                                    Transition.cupertino),
+                                            icon: Icon(
+                                              Iconsax.info_circle,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                          Text(
+                                            "Information",
+                                            style: GoogleFonts.openSans(
+                                                fontSize: 14,
+                                                color: Colors.white),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
                           ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: mediaQuery.height * .08,
+                    ),
+                    ElasticIn(
+                      child: Text(
+                        'GhostNet',
+                        style: GoogleFonts.orbitron(
+                          color: Theme.of(context).primaryColour,
+                          fontSize: 42,
+                          fontWeight: FontWeight.bold,
                         ),
-                      ],
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: mediaQuery.height * .08,
-                  ),
-                  Text(
-                    'GhostNet',
-                    style: GoogleFonts.orbitron(
-                      color: Theme.of(context).primaryColour,
-                      fontSize: 42,
-                      fontWeight: FontWeight.bold,
+                    SizedBox(
+                      height: mediaQuery.height * .04,
                     ),
-                  ),
-                  SizedBox(
-                    height: mediaQuery.height * .04,
-                  ),
-                  Obx(
-                    () => Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          _controller.vpnState.value ==
-                                  VpnEngine.vpnDisconnected
-                              ? 'Not Connected'
-                              : _controller.vpnState
-                                  .replaceAll('_', ' ')
-                                  .toUpperCase(),
-                          style: GoogleFonts.kanit(
-                            color: Colors.white,
-                            fontSize: 16,
+                    Obx(
+                      () => Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            _controller.vpnState.value ==
+                                    VpnEngine.vpnDisconnected
+                                ? 'Not Connected'
+                                : _controller.vpnState
+                                    .replaceAll('_', ' ')
+                                    .toUpperCase(),
+                            style: GoogleFonts.kanit(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
                           ),
-                        ),
-                        CountDownTimer(
-                            startTimer: _controller.vpnState.value ==
-                                VpnEngine.vpnConnected)
-                      ],
+                          CountDownTimer(
+                              startTimer: _controller.vpnState.value ==
+                                  VpnEngine.vpnConnected)
+                        ],
+                      ),
                     ),
-                  ),
-                  Obx(
-                    () => Padding(
-                      padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                      child: Container(
-                        height: 70,
-                        decoration: BoxDecoration(
-                          color: Colors.transparent,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        width: mediaQuery.width,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: BackdropFilter(
-                            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                            child: Container(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: mediaQuery.width * .04),
-                                height: 70,
-                                decoration: BoxDecoration(
-                                  color: Colors.black.withOpacity(0.2),
-                                  borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(20),
-                                    topLeft: Radius.circular(20),
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(0.1),
-                                      spreadRadius: 5,
-                                      blurRadius: 7,
-                                      offset: Offset(0, 3),
+                    Obx(
+                      () => Padding(
+                        padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                        child: Container(
+                          height: 70,
+                          decoration: BoxDecoration(
+                            color: Colors.transparent,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          width: mediaQuery.width,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: BackdropFilter(
+                              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                              child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: mediaQuery.width * .04),
+                                  height: 70,
+                                  decoration: BoxDecoration(
+                                    color: Colors.black.withOpacity(0.2),
+                                    borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(20),
+                                      topLeft: Radius.circular(20),
                                     ),
-                                  ],
-                                ),
-                                child: _changeLocation(context)),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.1),
+                                        spreadRadius: 5,
+                                        blurRadius: 7,
+                                        offset: Offset(0, 3),
+                                      ),
+                                    ],
+                                  ),
+                                  child: _changeLocation(context)),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ]),
+                  ]),
+            ),
           ),
           Obx(
-            () =>
-                Positioned(bottom: -10, left: 0, right: 0, child: _vpnButton()),
+            () => Positioned(
+                bottom: -10,
+                left: 0,
+                right: 0,
+                child: ElasticIn(
+                    delay: Duration(milliseconds: 800), child: _vpnButton())),
           ),
           Positioned(
             bottom: 0,
-            child: Container(
-              height: mediaQuery.height * 0.22,
-              decoration: BoxDecoration(
-                  color: Colors.transparent,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20))),
-              width: mediaQuery.width,
-              child: ClipRRect(
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(20),
-                  topLeft: Radius.circular(20),
-                ),
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: mediaQuery.height * 0.22,
-                    decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.2),
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(20),
+            child: FadeInUp(
+              child: Container(
+                height: mediaQuery.height * 0.22,
+                decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(20),
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          spreadRadius: 5,
-                          blurRadius: 7,
-                          offset: Offset(0, 3),
+                        topRight: Radius.circular(20))),
+                width: mediaQuery.width,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(20),
+                    topLeft: Radius.circular(20),
+                  ),
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: mediaQuery.height * 0.22,
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.2),
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(20),
+                          topLeft: Radius.circular(20),
                         ),
-                      ],
-                    ),
-                    child: StreamBuilder<VpnStatus?>(
-                      initialData: VpnStatus(),
-                      stream: VpnEngine.vpnStatusSnapshot(),
-                      builder: (context, snapshot) => Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 24, 0, 20),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            //download
-                            Container(
-                              child: Column(
-                                children: [
-                                  CircleAvatar(
-                                    radius: 20,
-                                    backgroundColor: Colors.lightGreen,
-                                    child: Icon(Iconsax.arrow_down_2,
-                                        size: 30, color: Colors.white),
-                                  ),
-                                  SizedBox(
-                                    height: 12,
-                                  ),
-                                  Text(
-                                    '${snapshot.data?.byteIn ?? '0 kbps'}',
-                                    style: GoogleFonts.kanit(
-                                      color: Theme.of(context).primaryColour,
-                                      fontSize: 18,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            spreadRadius: 5,
+                            blurRadius: 7,
+                            offset: Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      child: StreamBuilder<VpnStatus?>(
+                        initialData: VpnStatus(),
+                        stream: VpnEngine.vpnStatusSnapshot(),
+                        builder: (context, snapshot) => Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 24, 0, 20),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              //download
+                              Container(
+                                child: Column(
+                                  children: [
+                                    CircleAvatar(
+                                      radius: 20,
+                                      backgroundColor: Colors.lightGreen,
+                                      child: Icon(Iconsax.arrow_down_2,
+                                          size: 30, color: Colors.white),
                                     ),
-                                  ),
-                                  Text(
-                                    'Download',
-                                    style: GoogleFonts.kanit(
-                                      color: Colors.grey,
-                                      fontSize: 16,
+                                    SizedBox(
+                                      height: 12,
                                     ),
-                                  )
-                                ],
+                                    Text(
+                                      '${snapshot.data?.byteIn ?? '0 kbps'}',
+                                      style: GoogleFonts.kanit(
+                                        color: Theme.of(context).primaryColour,
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                                    Text(
+                                      'Download',
+                                      style: GoogleFonts.kanit(
+                                        color: Colors.grey,
+                                        fontSize: 16,
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ),
-                            ),
 
-                            Container(
-                              child: Column(
-                                children: [
-                                  CircleAvatar(
-                                    radius: 20,
-                                    backgroundColor: Colors.blue,
-                                    child: Icon(Iconsax.arrow_up_1,
-                                        size: 30, color: Colors.white),
-                                  ),
-                                  SizedBox(
-                                    height: 12,
-                                  ),
-                                  Text(
-                                    '${snapshot.data?.byteOut ?? '0 kbps'}',
-                                    style: GoogleFonts.kanit(
-                                      color: Theme.of(context).primaryColour,
-                                      fontSize: 18,
+                              Container(
+                                child: Column(
+                                  children: [
+                                    CircleAvatar(
+                                      radius: 20,
+                                      backgroundColor: Colors.blue,
+                                      child: Icon(Iconsax.arrow_up_1,
+                                          size: 30, color: Colors.white),
                                     ),
-                                  ),
-                                  Text(
-                                    'Download',
-                                    style: GoogleFonts.kanit(
-                                      color: Colors.grey,
-                                      fontSize: 16,
+                                    SizedBox(
+                                      height: 12,
                                     ),
-                                  ),
-                                ],
+                                    Text(
+                                      '${snapshot.data?.byteOut ?? '0 kbps'}',
+                                      style: GoogleFonts.kanit(
+                                        color: Theme.of(context).primaryColour,
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                                    Text(
+                                      'Download',
+                                      style: GoogleFonts.kanit(
+                                        color: Colors.grey,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -352,7 +368,10 @@ class GhostHome extends StatelessWidget {
             ),
           ),
           Obx(() => Positioned(
-              bottom: 120, left: 0, right: 0, child: _mainVPNButton())),
+              bottom: 120,
+              left: 0,
+              right: 0,
+              child: FadeInUp(child: _mainVPNButton()))),
         ],
       ),
     );
