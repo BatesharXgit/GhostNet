@@ -1,5 +1,8 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -24,31 +27,87 @@ class LocationScreen extends StatelessWidget {
 
     return Obx(
       () => Scaffold(
-        appBar: AppBar(
-          centerTitle: false,
-          forceMaterialTransparency: true,
-          title: Text(
-            'Servers (${_controller.vpnList.length})',
-            style: GoogleFonts.orbitron(fontSize: 18),
-          ),
-        ),
+        // appBar: AppBar(
+        //   centerTitle: false,
+        //   forceMaterialTransparency: true,
+        //   title: Text(
+        //     'Servers (${_controller.vpnList.length})',
+        //     style: GoogleFonts.orbitron(fontSize: 18),
+        //   ),
+        // ),
+        backgroundColor: Theme.of(context).backgroundColour,
         bottomNavigationBar:
             _adController.ad != null && _adController.adLoaded.isTrue
                 ? SafeArea(
                     child: SizedBox(
                         height: 85, child: AdWidget(ad: _adController.ad!)))
                 : null,
-        // floatingActionButton: Padding(
-        //   padding: const EdgeInsets.only(bottom: 10, right: 10),
-        //   child: FloatingActionButton(
-        //       onPressed: () => _controller.getVpnData(),
-        //       child: Icon(CupertinoIcons.refresh)),
-        // ),
-        body: _controller.isLoading.value
-            ? _loadingWidget()
-            : _controller.vpnList.isEmpty
-                ? _noVPNFound()
-                : _vpnData(),
+        body: Stack(
+          children: [
+            Transform(
+              alignment: Alignment.center,
+              transform: Matrix4.rotationY(3.141592653589793),
+              child: Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/dot.png'),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ),
+            Column(
+              children: [
+                Container(
+                  height: mediaQuery.height * 0.12,
+                  decoration: BoxDecoration(
+                    color: Colors.transparent,
+                  ),
+                  width: mediaQuery.width,
+                  child: ClipRRect(
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                      child: Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: mediaQuery.width * .04),
+                          height: 70,
+                          decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(0.4),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.1),
+                                spreadRadius: 5,
+                                blurRadius: 7,
+                                offset: Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(10, 40, 10, 0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Servers (${_controller.vpnList.length})',
+                                  style: GoogleFonts.orbitron(fontSize: 18),
+                                ),
+                              ],
+                            ),
+                          )),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: _controller.isLoading.value
+                      ? _loadingWidget()
+                      : _controller.vpnList.isEmpty
+                          ? _noVPNFound()
+                          : _vpnData(),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

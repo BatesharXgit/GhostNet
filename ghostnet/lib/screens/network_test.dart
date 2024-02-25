@@ -29,8 +29,6 @@ class NetworkInformation extends StatelessWidget {
             alignment: Alignment.center,
             transform: Matrix4.rotationX(3.141592653589793),
             child: Container(
-              // height: mediaQuery.height * .4,
-              // height: 400,
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('assets/images/dot.png'),

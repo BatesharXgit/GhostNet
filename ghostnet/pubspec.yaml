@@ -22,7 +22,7 @@ dependencies:
   firebase_remote_config: ^4.2.3
   rename: ^3.0.1
   google_fonts: ^6.1.0
-  iconly: ^1.0.1
+  animate_do: ^3.3.3
   iconsax: ^0.0.8
 
 

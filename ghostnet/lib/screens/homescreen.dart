@@ -87,7 +87,8 @@ class GhostHome extends StatelessWidget {
                                   ],
                                 ),
                                 child: IconButton(
-                                  onPressed: () => Get.to(SettingsPage()),
+                                  onPressed: () => Get.to(SettingsPage(),
+                                      transition: Transition.cupertino),
                                   icon: Icon(
                                     Iconsax.setting_3,
                                     color: Colors.white,
@@ -100,46 +101,53 @@ class GhostHome extends StatelessWidget {
                         SizedBox(
                           width: 8,
                         ),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.transparent,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: BackdropFilter(
-                              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.black.withOpacity(0.2),
-                                  borderRadius: BorderRadius.circular(20),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(0.1),
-                                      spreadRadius: 5,
-                                      blurRadius: 7,
-                                      offset: Offset(0, 3),
-                                    ),
-                                  ],
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(right: 8.0),
-                                  child: Row(
-                                    children: [
-                                      IconButton(
-                                        onPressed: () =>
-                                            Get.to(NetworkInformation()),
-                                        icon: Icon(
-                                          Iconsax.info_circle,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                      Text(
-                                        "Information",
-                                        style: GoogleFonts.openSans(
-                                            fontSize: 14, color: Colors.white),
+                        InkWell(
+                          onTap: () => Get.to(NetworkInformation(),
+                              transition: Transition.cupertino),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.transparent,
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: BackdropFilter(
+                                filter:
+                                    ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.black.withOpacity(0.2),
+                                    borderRadius: BorderRadius.circular(20),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.1),
+                                        spreadRadius: 5,
+                                        blurRadius: 7,
+                                        offset: Offset(0, 3),
                                       ),
                                     ],
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(right: 8.0),
+                                    child: Row(
+                                      children: [
+                                        IconButton(
+                                          onPressed: () => Get.to(
+                                              NetworkInformation(),
+                                              transition: Transition.cupertino),
+                                          icon: Icon(
+                                            Iconsax.info_circle,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        Text(
+                                          "Information",
+                                          style: GoogleFonts.openSans(
+                                              fontSize: 14,
+                                              color: Colors.white),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
@@ -281,7 +289,7 @@ class GhostHome extends StatelessWidget {
                                   CircleAvatar(
                                     radius: 20,
                                     backgroundColor: Colors.lightGreen,
-                                    child: Icon(Icons.arrow_downward_rounded,
+                                    child: Icon(Iconsax.arrow_down_2,
                                         size: 30, color: Colors.white),
                                   ),
                                   SizedBox(
@@ -311,7 +319,7 @@ class GhostHome extends StatelessWidget {
                                   CircleAvatar(
                                     radius: 20,
                                     backgroundColor: Colors.blue,
-                                    child: Icon(Icons.arrow_upward_rounded,
+                                    child: Icon(Iconsax.arrow_up_1,
                                         size: 30, color: Colors.white),
                                   ),
                                   SizedBox(
@@ -436,7 +444,8 @@ class GhostHome extends StatelessWidget {
   Widget _changeLocation(BuildContext context) => Semantics(
         button: true,
         child: InkWell(
-          onTap: () => Get.to(() => LocationScreen()),
+          onTap: () =>
+              Get.to(() => LocationScreen(), transition: Transition.cupertino),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -460,7 +469,7 @@ class GhostHome extends StatelessWidget {
               Text(
                 _controller.vpn.value.countryLong.isEmpty
                     ? 'Country'
-                    : _controller.vpn.value.countryLong.length > 10
+                    : _controller.vpn.value.countryLong.length > 15
                         ? _controller.vpn.value.countryLong.substring(0,
                             _controller.vpn.value.countryLong.lastIndexOf(' '))
                         : _controller.vpn.value.countryLong,
