@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:ghostnet/screens/homescreen.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'firebase_options.dart';
 import 'helpers/ad_helper.dart';
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'GhostNet',
-      home: SplashScreen(),
+      home: GhostHome(),
       theme:
           ThemeData(appBarTheme: AppBarTheme(centerTitle: true, elevation: 3)),
       themeMode: Pref.isDarkMode ? ThemeMode.dark : ThemeMode.light,

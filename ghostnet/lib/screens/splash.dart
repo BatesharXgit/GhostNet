@@ -1,37 +1,37 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:get/route_manager.dart';
-import '../helpers/ad_helper.dart';
-import 'homescreen.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter/services.dart';
+// import 'package:get/route_manager.dart';
+// import '../helpers/ad_helper.dart';
+// import 'homescreen.dart';
 
-class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+// class SplashScreen extends StatefulWidget {
+//   const SplashScreen({super.key});
 
-  @override
-  State<SplashScreen> createState() => _SplashScreenState();
-}
+//   @override
+//   State<SplashScreen> createState() => _SplashScreenState();
+// }
 
-class _SplashScreenState extends State<SplashScreen> {
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(Duration(milliseconds: 1500), () {
-      SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-      AdHelper.precacheInterstitialAd();
-      AdHelper.precacheNativeAd();
-      Get.off(() => GhostHome());
-    });
-  }
+// class _SplashScreenState extends State<SplashScreen> {
+//   @override
+//   void initState() {
+//     super.initState();
+//     Future.delayed(Duration(milliseconds: 1500), () {
+//       SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+//       AdHelper.precacheInterstitialAd();
+//       AdHelper.precacheNativeAd();
+//       Get.off(() => GhostHome());
+//     });
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-          child: Image.asset(
-        'assets/images/logo.png',
-        width: 500,
-        height: 500,
-      )),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Center(
+//           child: Image.asset(
+//         'assets/images/logo.png',
+//         width: 500,
+//         height: 500,
+//       )),
+//     );
+//   }
+// }
