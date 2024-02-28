@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -156,7 +155,7 @@ class LocationScreen extends StatelessWidget {
 
   Widget _noVPNFound() => Center(
         child: Text(
-          'VPNs Not Found! 😔',
+          'OOPs, No VPN Found',
           style: TextStyle(
               fontSize: 18, color: Colors.black54, fontWeight: FontWeight.bold),
         ),

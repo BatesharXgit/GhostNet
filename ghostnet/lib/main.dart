@@ -14,12 +14,13 @@ late Size mediaQuery;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+  // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
   MobileAds.instance.initialize();
   await Firebase.initializeApp();
   await Config.initConfig();
   await Pref.initializeHive();
   await AdHelper.initAds();
+  AdHelper.precacheNativeAd();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -31,10 +32,12 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Brightness platformBrightness = MediaQuery.of(context).platformBrightness;
+
     return GetMaterialApp(
       title: 'GhostNet',
       home: GhostHome(),
@@ -44,7 +47,7 @@ class MyApp extends StatelessWidget {
       darkTheme: ThemeData(
           brightness: Brightness.dark,
           appBarTheme: AppBarTheme(centerTitle: true, elevation: 3)),
-      debugShowCheckedModeBanner: true,
+      debugShowCheckedModeBanner: false,
     );
   }
 }

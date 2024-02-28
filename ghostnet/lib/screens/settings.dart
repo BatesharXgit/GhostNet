@@ -38,7 +38,7 @@ class SettingsPage extends StatelessWidget {
             delay: NumDurationExtensions(1).seconds,
             duration: NumDurationExtensions(2).seconds)
         .then()
-        .tint(color: const Color(0xFF80DDFF))
+        .tint(color: Theme.of(context).primaryColour)
         .then();
 
     return Scaffold(
@@ -106,7 +106,8 @@ class SettingsPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  // title,
+                  const SizedBox(height: 20),
+                  title,
                   const SizedBox(height: 20),
                   Container(
                     margin: EdgeInsets.symmetric(
@@ -355,7 +356,7 @@ class SettingsPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  '🌟 Immerse yourself in the world of GhostNet – the ultimate wallpaper app. Discover an extensive selection of static and dynamic wallpapers across various categories, all presented through a beautifully designed and intuitive interface. Elevate your device\'s aesthetic with GhostNet\'s stunning visuals that cater to every mood and style. 🎨📱',
+                  '🔒 Protect your online privacy with GhostVPN - the premier VPN app. Explore a wide range of secure servers across the globe, ensuring anonymous and encrypted browsing. With an easy-to-use interface, GhostVPN offers seamless protection for your digital activities. Safeguard your data and access restricted content with confidence. 🌐🔒',
                   style: TextStyle(
                     color: Colors.grey[400],
                     fontSize: 16,
